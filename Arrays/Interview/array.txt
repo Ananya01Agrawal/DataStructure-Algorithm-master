@@ -1,0 +1,24 @@
+Q #1) Can we declare an Array without size?
+
+Answer: Yes. We can declare an array without size but before using it needs to be initialized.
+
+Q #2) Is Array size fixed in Java?
+
+Answer: Yes. Arrays are static in Java and you declare an array with a specified size. Once this size is specified, you cannot change it again.
+
+Q #3) Is it always necessary to use new while initializing arrays?
+
+Answer: No. Arrays can be initialized using new or by assigning comma-separated values enclosed in curly braces.
+
+So when we initialize an array using Array literal as shown below. You do not need to use new ones.
+
+int[] myarray = {1,2,3,4,5};
+The number of elements provided will determine the size of the array.
+
+Q #4) Is Java Array serializable?
+
+Answer: Yes. Internally the Array in Java implements the serializable interface.
+
+Q #5) Is an Array Primitive data type?
+
+Answer: No. In fact, an array is not a data type at all. An array is a container object that holds the elements of specific data types in contiguous memory locations.

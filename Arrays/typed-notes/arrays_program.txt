@@ -1,0 +1,322 @@
+Arrays :
+
+1) Insertion at particular location if space at placee is available
+Time complexity for this operation O(1)
+
+eg#1
+public class InsertionArray{
+   int []arr=null;
+   public void singleDimensionArray(int size){
+      arr=new int[size];
+      for(int i=0;i<arr.length;i++){
+         arr[i]=Integer.MIN_VALUE;
+      }
+   }
+
+   public void insert (int location, int value)
+   {
+    if(location<arr.length && location>=0)
+    {if(arr[location]==Integer.MIN_VALUE)
+    {arr[location]=value;
+    System.out.println("Successfully inserted "+value+" at location "+location);
+    }
+    else
+    System.out.println("This cell is already occupied by another value");
+   }
+
+   else
+   {
+    System.out.println("Invalid index to access array");
+   }
+   }
+   public static void main(String []args){
+    InsertionArray ia=new InsertionArray();
+    ia.singleDimensionArray(10);
+    ia.insert(0,10);
+    ia.insert(0,20);
+    ia.insert(1,20);
+    ia.insert(2,30);
+    ia.insert(3,40);
+    ia.insert(4,50);
+    ia.insert(5,60);
+    ia.insert(10,70);
+   
+   }
+}
+
+Output:
+PS D:\DataStructure-Algorithm\Arrays\code> javac InsertionArray.java
+PS D:\DataStructure-Algorithm\Arrays\code> java InsertionArray
+Successfully inserted 10 at location 0
+This cell is already occupied by another value
+Successfully inserted 20 at location 1
+Successfully inserted 30 at location 2
+Successfully inserted 40 at location 3
+Successfully inserted 50 at location 4
+Successfully inserted 60 at location 5
+Invalid index to access array
+
+2)Insertion At begin of array 
+
+Insertion at begin is not efficient its time complexity is O(n)
+eg#2
+ 
+import java.util.Arrays;
+public class InsertionAtBeginArray {
+    int []arr=null;
+    public void singleDimensionArray(int size){
+       arr=new int[size];
+       for(int i=0;i<arr.length;i++){
+          arr[i]=Integer.MIN_VALUE;
+       }
+    }
+
+    public void insert (int location, int value)
+    {
+     if(location<arr.length && location>=0)
+     {if(arr[location]==Integer.MIN_VALUE)
+     {arr[location]=value;
+     System.out.println("Successfully inserted "+value+" at location "+location);
+     }
+     else
+     System.out.println("This cell is already occupied by another value");
+    }
+}
+
+public void insertBegin(int value){
+    int till;
+    if(arr[0]==Integer.MIN_VALUE)
+    {
+        arr[0]=value;
+        System.out.println("Successfully inserted "+value+" at location 0");
+    }
+    else if((till=checkArrayHasSpace())!=-1){
+for(int i=0;i<=till;i++){
+    int temp=arr[i];
+    arr[i]=value;
+    value=temp;
+}
+System.out.println("Successfully inserted " +"at location 0"+" and shifted other elements to right"); 
+    }
+    
+else{
+    System.out.println("Array is full");
+}
+}
+
+public int checkArrayHasSpace(){
+int flag=-1;
+for(int i=0;i<arr.length;i++){
+    if(arr[i]==Integer.MIN_VALUE){
+        flag=i;
+        return i;
+    }
+}
+return flag;
+}
+    
+public static void main(String []args){
+    InsertionAtBeginArray ie=new InsertionAtBeginArray();
+    ie.singleDimensionArray(10);
+    
+    ie.insert(1,20);
+    ie.insert(2,30);
+    ie.insert(3,40);
+    ie.insert(5,50);
+    ie.insert(6,60);
+    ie.insert(10,70);
+    ie.insertBegin(100);
+    ie.insertBegin(200);
+    ie.insertBegin(300);
+    ie.insertBegin(400);
+    ie.insertBegin(500);
+    ie.insertBegin(600);
+    System.out.println(Arrays.toString(ie.arr));
+
+
+}
+}
+
+Output:
+PS D:\DataStructure-Algorithm\Arrays\code> javac InsertionAtBeginArray.java
+PS D:\DataStructure-Algorithm\Arrays\code> java InsertionAtBeginArray
+Successfully inserted 20 at location 1
+Successfully inserted 30 at location 2
+Successfully inserted 40 at location 3
+Successfully inserted 50 at location 5
+Successfully inserted 60 at location 6
+Successfully inserted 100 at location 0
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Array is full
+[500, 400, 300, 200, 100, 20, 30, 40, 50, 60]
+
+3)Insertion if array is full
+Insertion in full array is not efficient its time complexity is O(n)
+
+eg#3
+import java.util.Arrays;
+public class InsertAtFullArray{
+    int []arr=null;
+    public void singleDimensionArray(int size){
+       arr=new int[size];
+       for(int i=0;i<arr.length;i++){
+          arr[i]=Integer.MIN_VALUE;
+       }
+    }
+
+    public void insert(int location, int value)
+    {
+     int till;
+     if(location<arr.length && location>=0 && arr[location]==Integer.MIN_VALUE)
+     {arr[location]=value;
+     System.out.println("Successfully inserted "+value+" at location "+location);
+     }
+     else if(  (till=checkArrayHasSpace())!=-1&&location<arr.length && location>=0 ){
+        if(till>location)
+        {
+            for(int i=location;i<=till;i++){
+                int temp=arr[i];
+                arr[i]=value;
+                value=temp;
+            }
+        }
+
+        else{
+            for(int i=till;i<location;i++){
+                int temp=arr[i];
+                arr[i]=arr[i+1];
+                arr[i+1]=temp;
+            }
+            arr[location]=value;
+        }
+     }
+     else if( till==-1 && location<(3*arr.length/2)&& location>=0){
+        int arr1[];
+        arr1=arr;
+        System.out.println("Size of array will now become 1.5 times of original size");
+        arr=new int[arr.length+arr.length/2];
+        for(int i=0;i<=location;i++){
+            if(i==location){
+                arr[i]=value;
+            }
+            else{
+                arr[i]=arr1[i];
+            }
+        }
+        for(int i=location+1;i<=arr1.length;i++){
+            arr[i]=arr1[i-1];
+        }
+
+        for(int i=arr1.length+1;i<arr.length;i++){
+            arr[i]=Integer.MIN_VALUE;
+        } 
+    }
+
+    else 
+    {
+     System.out.println("location is greater than the capacity of new array ");
+    }
+}
+
+public void insertBegin(int value){
+    int till;
+    if(arr[0]==Integer.MIN_VALUE)
+    {
+        arr[0]=value;
+        System.out.println("Successfully inserted "+value+" at location 0");
+    }
+    
+    else if((till=checkArrayHasSpace())!=-1){
+for(int i=0;i<=till;i++){
+    int temp=arr[i];
+    arr[i]=value;
+    value=temp;
+}
+System.out.println("Successfully inserted " +"at location 0"+" and shifted other elements to right"); 
+    }
+    
+else{
+    System.out.println("Array is full");
+}
+}
+
+public int checkArrayHasSpace(){
+int flag=-1;
+for(int i=0;i<arr.length;i++){
+    if(arr[i]==Integer.MIN_VALUE){
+        flag=i;
+        return i;
+    }
+}
+return flag;
+}
+    
+public static void main(String []args){
+    InsertAtFullArray ie=new InsertAtFullArray();
+    ie.singleDimensionArray(10);
+    
+    ie.insert(1,20);
+    ie.insert(2,30);
+    // ie.insert(3,40);
+    ie.insert(5,50);
+    ie.insert(6,60);
+    ie.insert(10,70);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insertBegin(100);
+    ie.insertBegin(200);
+    ie.insertBegin(300);
+    ie.insertBegin(400);
+    ie.insertBegin(500);
+    ie.insertBegin(600);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,800);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,900);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,1000);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,1100);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,1200);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,1300);
+    System.out.println(Arrays.toString(ie.arr));
+    ie.insert(4,1400);
+    System.out.println(Arrays.toString(ie.arr));
+
+
+
+}
+}
+
+output:
+PS D:\DataStructure-Algorithm\Arrays\code> javac InsertAtFullArray.java
+PS D:\DataStructure-Algorithm\Arrays\code> java InsertAtFullArray
+Successfully inserted 20 at location 1
+Successfully inserted 30 at location 2
+Successfully inserted 50 at location 5
+Successfully inserted 60 at location 6
+location is greater than the capacity of new array
+[-2147483648, 20, 30, -2147483648, -2147483648, 50, 60, -2147483648, -2147483648, -2147483648]
+Successfully inserted 100 at location 0
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+Successfully inserted at location 0 and shifted other elements to right
+[600, 500, 400, 300, 200, 100, 20, 30, 50, 60]
+Size of array will now become 1.5 times of original size
+[600, 500, 400, 300, 800, 200, 100, 20, 30, 50, 60, -2147483648, -2147483648, -2147483648, -2147483648]
+[600, 500, 400, 300, 900, 800, 200, 100, 20, 30, 50, 60, -2147483648, -2147483648, -2147483648]
+[600, 500, 400, 300, 1000, 900, 800, 200, 100, 20, 30, 50, 60, -2147483648, -2147483648]
+[600, 500, 400, 300, 1100, 1000, 900, 800, 200, 100, 20, 30, 50, 60, -2147483648]
+[600, 500, 400, 300, 1200, 1100, 1000, 900, 800, 200, 100, 20, 30, 50, 60]
+Size of array will now become 1.5 times of original size
+[600, 500, 400, 300, 1300, 1200, 1100, 1000, 900, 800, 200, 100, 20, 30, 50, 60, -2147483648, -2147483648, -2147483648, -2147483648,
+ -2147483648, -2147483648]
+[600, 500, 400, 300, 1400, 1300, 1200, 1100, 1000, 900, 800, 200, 100, 20, 30, 50, 60, -2147483648, -2147483648, -2147483648, -21474
+83648, -2147483648]
+
